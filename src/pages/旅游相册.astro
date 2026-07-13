@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import galleryData from '../data/gallery.json';
+
+interface GalleryImage {
+  src: string;
+  alt: string;
+  title: string;
+}
+
+const gallery = galleryData as GalleryImage[];
+---
+
+<BaseLayout title="旅游相册" description="旅行途中留下的照片。" canonicalPath="/旅游相册/">
+  <section class="section">
+    <div class="shell">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Travel</span>
+          <h1>旅游相册</h1>
+          <p class="page-intro">从旧站完整迁移的旅行照片。</p>
+        </div>
+      </div>
+      <div class="gallery-grid">
+        {gallery.map((image, index) => (
+          <figure class="gallery-item">
+            <img
+              src={image.src}
+              alt={image.alt || `旅行照片 ${index + 1}`}
+              title={image.title || undefined}
+              loading={index < 2 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+            {(image.alt || image.title) && <figcaption>{image.title || image.alt}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

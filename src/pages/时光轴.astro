@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { sortPosts } from '../utils/posts';
+
+const posts = sortPosts(await getCollection('blog', ({ data }) => !data.draft));
+const years = new Map<string, typeof posts>();
+for (const post of posts) {
+  const year = new Intl.DateTimeFormat('en', {
+    timeZone: 'Asia/Shanghai',
+    year: 'numeric',
+  }).format(post.data.publishedAt);
+  years.set(year, [...(years.get(year) || []), post]);
+}
+const grouped = [...years.entries()].sort((a, b) => Number(b[0]) - Number(a[0]));
+const monthDay = new Intl.DateTimeFormat('zh-CN', {
+  timeZone: 'Asia/Shanghai',
+  month: '2-digit',
+  day: '2-digit',
+});
+---
+
+<BaseLayout title="时光轴" description="按时间回看 To1in 的文章。" canonicalPath="/时光轴/">
+  <section class="section">
+    <div class="shell">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Timeline</span>
+          <h1>时光轴</h1>
+          <p class="page-intro">从最近写下的内容，一路回到博客开始的地方。</p>
+        </div>
+      </div>
+      <div class="timeline">
+        {grouped.map(([year, yearPosts]) => (
+          <section class="timeline-year" aria-labelledby={`year-${year}`}>
+            <h2 id={`year-${year}`}>{year}</h2>
+            <ol>
+              {yearPosts.map((post) => (
+                <li>
+                  <time datetime={post.data.publishedAt.toISOString()}>
+                    {monthDay.format(post.data.publishedAt)}
+                  </time>
+                  <a href={post.data.route}>{post.data.title}</a>
+                </li>
+              ))}
+            </ol>
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

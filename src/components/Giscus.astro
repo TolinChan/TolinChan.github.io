@@ -1,0 +1,46 @@
+---
+const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID;
+const categoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID;
+const configured = Boolean(repoId && categoryId);
+---
+
+<section class="giscus-section" aria-labelledby="comments-title">
+  <h2 id="comments-title">讨论</h2>
+  {configured ? (
+    <>
+      <script
+        src="https://giscus.app/client.js"
+        data-repo="TolinChan/TolinChan.github.io"
+        data-repo-id={repoId}
+        data-category="Blog Comments"
+        data-category-id={categoryId}
+        data-mapping="pathname"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async
+        is:inline
+      ></script>
+    </>
+  ) : (
+    <p class="giscus-pending">
+      评论将在 GitHub Discussions 完成初始化后启用。
+    </p>
+  )}
+</section>
+
+<script>
+  document.addEventListener('themechange', (event) => {
+    const theme = (event as CustomEvent<{ theme: string }>).detail.theme;
+    const iframe = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
+    iframe?.contentWindow?.postMessage(
+      { giscus: { setConfig: { theme: theme === 'dark' ? 'dark' : 'light' } } },
+      'https://giscus.app',
+    );
+  });
+</script>

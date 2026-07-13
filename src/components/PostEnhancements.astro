@@ -1,0 +1,65 @@
+<script>
+  import renderMathInElement from 'katex/contrib/auto-render';
+
+  function slugifyHeading(value: string) {
+    return value
+      .normalize('NFKC')
+      .trim()
+      .toLocaleLowerCase('zh-CN')
+      .replace(/\s+/g, '-')
+      .replace(/[^\p{Letter}\p{Number}\-_]+/gu, '') || 'section';
+  }
+
+  function buildToc(article: Element) {
+    const placeholders = article.querySelectorAll<HTMLElement>('[data-auto-toc]');
+    if (!placeholders.length) return;
+    const headings = [...article.querySelectorAll<HTMLElement>('h2, h3')]
+      .filter((heading) => !heading.closest('[data-auto-toc]'));
+    if (!headings.length) {
+      placeholders.forEach((placeholder) => placeholder.remove());
+      return;
+    }
+    const used = new Map<string, number>();
+    headings.forEach((heading) => {
+      let id = heading.id || slugifyHeading(heading.textContent || '');
+      const count = used.get(id) || 0;
+      used.set(id, count + 1);
+      if (count) id = `${id}-${count + 1}`;
+      heading.id = id;
+    });
+    placeholders.forEach((placeholder) => {
+      const title = document.createElement('strong');
+      title.textContent = '文章目录';
+      const list = document.createElement('ol');
+      headings.forEach((heading) => {
+        const item = document.createElement('li');
+        item.dataset.level = heading.tagName === 'H3' ? '3' : '2';
+        const link = document.createElement('a');
+        link.href = `#${heading.id}`;
+        link.textContent = heading.textContent || heading.id;
+        item.append(link);
+        list.append(item);
+      });
+      placeholder.replaceChildren(title, list);
+    });
+  }
+
+  function enhancePost() {
+    const article = document.querySelector<HTMLElement>('.post-content');
+    if (!article) return;
+    buildToc(article);
+    renderMathInElement(article, {
+      throwOnError: false,
+      strict: false,
+      ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\[', right: '\\]', display: true },
+        { left: '\\(', right: '\\)', display: false },
+        { left: '$', right: '$', display: false },
+      ],
+    });
+  }
+
+  enhancePost();
+</script>

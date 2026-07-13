@@ -1,0 +1,35 @@
+---
+import type { BlogPost } from '../utils/posts';
+import { formatDate, termHref } from '../utils/posts';
+
+interface Props {
+  post: BlogPost;
+}
+
+const { post } = Astro.props;
+---
+
+<article class="post-card">
+  <div class="post-card-meta">
+    <time datetime={post.data.publishedAt.toISOString()}>
+      {formatDate(post.data.publishedAt)}
+    </time>
+    {post.data.categories[0] && (
+      <a href={termHref('category', post.data.categories[0])}>
+        {post.data.categories[0]}
+      </a>
+    )}
+  </div>
+  <h2><a href={post.data.route}>{post.data.title}</a></h2>
+  <p>{post.data.description || '这篇文章暂时没有摘要。'}</p>
+  <div class="post-card-footer">
+    <a class="read-more" href={post.data.route}>阅读全文 <span aria-hidden="true">→</span></a>
+    {post.data.tags.length > 0 && (
+      <ul class="inline-tags" aria-label="标签">
+        {post.data.tags.slice(0, 3).map((tag) => (
+          <li><a href={termHref('tag', tag)}>#{tag}</a></li>
+        ))}
+      </ul>
+    )}
+  </div>
+</article>

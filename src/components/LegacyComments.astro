@@ -1,0 +1,39 @@
+---
+import allComments from '../data/legacy-comments.json';
+import { formatDate } from '../utils/posts';
+
+interface LegacyComment {
+  legacyPostId: number;
+  route: string;
+  author: string;
+  date: string;
+  content: string;
+}
+
+interface Props {
+  legacyId: number;
+}
+
+const { legacyId } = Astro.props;
+const comments = (allComments as LegacyComment[]).filter(
+  (comment) => comment.legacyPostId === legacyId,
+);
+---
+
+{comments.length > 0 && (
+  <section class="legacy-comments" aria-labelledby="legacy-comments-title">
+    <h2 id="legacy-comments-title">历史评论</h2>
+    <p class="section-note">以下评论从旧站迁移，邮箱和 IP 等信息已永久移除。</p>
+    <ol>
+      {comments.map((comment) => (
+        <li>
+          <header>
+            <strong>{comment.author || '旧站访客'}</strong>
+            <time datetime={comment.date}>{formatDate(new Date(comment.date))}</time>
+          </header>
+          <p>{comment.content}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+)}

@@ -1,0 +1,44 @@
+---
+import type { GetStaticPaths, Page } from 'astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import type { BlogPost } from '../../utils/posts';
+import { sortPosts } from '../../utils/posts';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = sortPosts(await getCollection('blog', ({ data }) => !data.draft));
+  return paginate(posts, { pageSize: 10 });
+}) satisfies GetStaticPaths;
+
+interface Props {
+  page: Page<BlogPost>;
+}
+
+const { page } = Astro.props;
+---
+
+<BaseLayout
+  title="文章"
+  description="To1in 的全部技术文章与随笔。"
+  canonicalPath={page.currentPage === 1 ? '/文章/' : `/文章/${page.currentPage}/`}
+>
+  <section class="section">
+    <div class="shell">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Archive</span>
+          <h1>文章</h1>
+          <p class="page-intro">按发布时间浏览全部文章，共 {page.total} 篇。</p>
+        </div>
+      </div>
+      <div class="post-list">
+        {page.data.map((post) => <PostCard post={post} />)}
+      </div>
+      <nav class="pagination" aria-label="文章分页">
+        {page.url.prev ? <a href={page.url.prev}>← 上一页</a> : <span></span>}
+        {page.url.next && <a href={page.url.next}>下一页 →</a>}
+      </nav>
+    </div>
+  </section>
+</BaseLayout>

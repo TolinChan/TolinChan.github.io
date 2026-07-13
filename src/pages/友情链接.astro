@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import friendData from '../data/friends.json';
+
+interface Friend {
+  name: string;
+  url: string;
+  description: string;
+}
+
+const friends = friendData as Friend[];
+---
+
+<BaseLayout title="友情链接" description="旧站迁移保留的朋友们。" canonicalPath="/友情链接/">
+  <section class="section">
+    <div class="shell">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Friends</span>
+          <h1>友情链接</h1>
+          <p class="page-intro">这些链接按旧站公开数据原样保留，站点状态可能随时间变化。</p>
+        </div>
+      </div>
+      <div class="friends-grid">
+        {friends.map((friend) => (
+          <a class="friend-card" href={friend.url} rel="friend external noopener">
+            <strong>{friend.name}</strong>
+            <span>{friend.description || new URL(friend.url).hostname}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

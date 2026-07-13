@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="页面已迁移" description="旧相册页面已合并。" canonicalPath="/旅游相册/">
+  <meta http-equiv="refresh" content="0;url=/旅游相册/" slot="head" />
+  <section class="section">
+    <div class="shell">
+      <p>旧页面已合并到 <a href="/旅游相册/">旅游相册</a>。</p>
+    </div>
+  </section>
+  <script is:inline>window.location.replace('/%E6%97%85%E6%B8%B8%E7%9B%B8%E5%86%8C/');</script>
+</BaseLayout>

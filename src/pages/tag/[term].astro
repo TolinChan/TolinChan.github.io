@@ -1,0 +1,35 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { sortPosts, termSlug } from '../../utils/posts';
+
+export const getStaticPaths = (async () => {
+  const posts = sortPosts(await getCollection('blog', ({ data }) => !data.draft));
+  const terms = new Map<string, { name: string; posts: typeof posts }>();
+  for (const post of posts) {
+    for (const name of post.data.tags) {
+      const slug = termSlug(name);
+      const current = terms.get(slug) || { name, posts: [] };
+      current.posts.push(post);
+      terms.set(slug, current);
+    }
+  }
+  return [...terms.entries()].map(([term, value]) => ({
+    params: { term },
+    props: value,
+  }));
+}) satisfies GetStaticPaths;
+
+const { name, posts } = Astro.props;
+---
+
+<BaseLayout title={`标签：${name}`} description={`带有“${name}”标签的文章。`} canonicalPath={Astro.url.pathname}>
+  <section class="section">
+    <div class="shell">
+      <div class="section-heading"><div><span class="eyebrow">Tag</span><h1>#{name}</h1></div></div>
+      <div class="post-list">{posts.map((post) => <PostCard post={post} />)}</div>
+    </div>
+  </section>
+</BaseLayout>
