@@ -34,9 +34,9 @@ Variables：
 - `PUBLIC_GISCUS_REPO_ID`
 - `PUBLIC_GISCUS_CATEGORY_ID`
 
-本仓库已经写入 `PUBLIC_GISCUS_REPO_ID`。创建分类后，可在
-[Giscus 配置页](https://giscus.app/zh-CN)取得分类 ID；写入
-`PUBLIC_GISCUS_CATEGORY_ID` 后重新运行 Pages 工作流即可启用评论。
+本仓库已经配置上述两个 Variables。若以后更换仓库或 Discussion 分类，可在
+[Giscus 配置页](https://giscus.app/zh-CN)取得新的 ID；更新 Variables 后重新
+运行 Pages 工作流即可应用新配置。
 
 ## 自定义域名切换
 
