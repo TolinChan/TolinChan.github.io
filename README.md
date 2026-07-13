@@ -27,10 +27,27 @@ npm.cmd run verify
 
 ## Giscus
 
-GitHub 仓库开启 Discussions 并创建 `Blog Comments` 分类后，将仓库 ID 与
-分类 ID 写入 GitHub Actions 的 Variables：
+GitHub 仓库开启 Discussions、安装 [Giscus GitHub App](https://github.com/apps/giscus)
+并创建 `Blog Comments` 分类后，将仓库 ID 与分类 ID 写入 GitHub Actions 的
+Variables：
 
 - `PUBLIC_GISCUS_REPO_ID`
 - `PUBLIC_GISCUS_CATEGORY_ID`
+
+本仓库已经写入 `PUBLIC_GISCUS_REPO_ID`。创建分类后，可在
+[Giscus 配置页](https://giscus.app/zh-CN)取得分类 ID；写入
+`PUBLIC_GISCUS_CATEGORY_ID` 后重新运行 Pages 工作流即可启用评论。
+
+## 自定义域名切换
+
+先在 `https://TolinChan.github.io` 验收部署，再按以下顺序切换：
+
+1. 在 GitHub 验证 `tolinchan.xyz`，并在 Pages 设置中添加
+   `blog.tolinchan.xyz`。
+2. 将 DNSPod 中 `blog` 的 A 记录 `116.62.4.97` 替换为指向
+   `tolinchan.github.io` 的 CNAME。
+3. DNS 生效且站点正常后启用 Enforce HTTPS。
+
+切换完成前保留旧 A 记录；若新站异常且旧服务器仍可用，恢复旧 A 记录。
 
 不要把数据库、WordPress 整站包、WXR、`.env` 或旧站凭据提交到仓库。
