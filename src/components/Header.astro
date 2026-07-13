@@ -14,8 +14,9 @@ const currentPath = Astro.url.pathname;
 <header class="site-header">
   <div class="shell header-inner">
     <a class="brand" href="/" aria-label="To1in's Blog 首页">
-      <span class="brand-mark" aria-hidden="true">T</span>
-      <span>To1in's Blog</span>
+      <span class="brand-name">To1in</span>
+      <span class="brand-divider" aria-hidden="true">/</span>
+      <span class="brand-note">研究手记</span>
     </a>
     <nav class="main-nav" aria-label="主导航">
       {navigation.map((item) => (

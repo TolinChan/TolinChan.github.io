@@ -4,12 +4,16 @@ import { formatDate, termHref } from '../utils/posts';
 
 interface Props {
   post: BlogPost;
+  featured?: boolean;
 }
 
-const { post } = Astro.props;
+const { post, featured = false } = Astro.props;
+const description = (post.data.description || '这篇文章暂时没有摘要。')
+  .replace(/^markDown\d+\s*/i, '')
+  .trim();
 ---
 
-<article class="post-card">
+<article class:list={['post-card', { 'post-card--featured': featured }]}>
   <div class="post-card-meta">
     <time datetime={post.data.publishedAt.toISOString()}>
       {formatDate(post.data.publishedAt)}
@@ -20,10 +24,9 @@ const { post } = Astro.props;
       </a>
     )}
   </div>
-  <h2><a href={post.data.route}>{post.data.title}</a></h2>
-  <p>{post.data.description || '这篇文章暂时没有摘要。'}</p>
-  <div class="post-card-footer">
-    <a class="read-more" href={post.data.route}>阅读全文 <span aria-hidden="true">→</span></a>
+  <div class="post-card-body">
+    <h2><a href={post.data.route}>{post.data.title}</a></h2>
+    <p>{description}</p>
     {post.data.tags.length > 0 && (
       <ul class="inline-tags" aria-label="标签">
         {post.data.tags.slice(0, 3).map((tag) => (
@@ -32,4 +35,7 @@ const { post } = Astro.props;
       </ul>
     )}
   </div>
+  <a class="post-card-link" href={post.data.route} aria-label={`阅读《${post.data.title}》`}>
+    <span aria-hidden="true">↗</span>
+  </a>
 </article>

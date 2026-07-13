@@ -17,18 +17,15 @@ const categories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]);
 
 <BaseLayout>
   <section class="hero">
-    <div class="shell hero-grid">
-      <div>
-        <span class="eyebrow">Security · Crypto · Notes</span>
-        <h1>拆解问题，留下思考。</h1>
+    <div class="shell hero-inner">
+      <span class="eyebrow">To1in / Research Notes</span>
+      <h1>拆解问题，<span>留下思考。</span></h1>
+      <div class="hero-footer">
         <p class="hero-copy">
-          这里记录密码学、安全研究、CTF 与偶尔偏离技术轨道的生活片段。
+          密码学、安全研究、CTF，以及偶尔偏离技术轨道的生活片段。
         </p>
+        <p class="hero-index">Security · Crypto · Life<br />{posts.length} 篇公开文章</p>
       </div>
-      <aside class="hero-note" aria-label="博客归档统计">
-        <strong>{posts.length}</strong>
-        <span>篇从旧站完整迁移的文章</span>
-      </aside>
     </div>
   </section>
 
@@ -42,7 +39,7 @@ const categories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]);
         <a href="/文章/">查看全部文章 →</a>
       </div>
       <div class="post-list">
-        {latest.map((post) => <PostCard post={post} />)}
+        {latest.map((post, index) => <PostCard post={post} featured={index === 0} />)}
       </div>
     </div>
   </section>
