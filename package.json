@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build && node scripts/create_sites_worker.mjs",
+    "build": "astro check && astro build && node scripts/create_sites_worker.mjs && node scripts/test_sites_worker.mjs",
     "preview": "astro preview",
     "migrate": "python scripts/migrate_wordpress.py --wxr ../to1in039sblog.WordPress.2025-07-05.xml --sql ../db_backup_20250705_134141.sql.gz --archive ../wordpress_backup_20250705_134141.tar.gz --output .",
     "verify": "python scripts/verify_migration.py"
