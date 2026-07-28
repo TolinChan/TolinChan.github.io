@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import worker from '../dist/server/index.js';
 
-const dist = new URL('../dist/', import.meta.url);
+const dist = new URL('../dist/client/', import.meta.url);
 const env = {
   ASSETS: {
     async fetch(request) {

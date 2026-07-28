@@ -1,5 +1,7 @@
-import { mkdir, writeFile } from 'node:fs/promises';
+import { cp, mkdir, readdir, writeFile } from 'node:fs/promises';
 
+const distDirectory = new URL('../dist/', import.meta.url);
+const clientDirectory = new URL('../dist/client/', import.meta.url);
 const outputDirectory = new URL('../dist/server/', import.meta.url);
 const worker = `function assetRequest(request, pathname) {
   const url = new URL(request.url);
@@ -41,6 +43,20 @@ export default {
   },
 };
 `;
+
+await mkdir(clientDirectory, { recursive: true });
+const entries = await readdir(distDirectory, { withFileTypes: true });
+for (const entry of entries) {
+  if (entry.name === 'client' || entry.name === 'server' || entry.name === '.openai') {
+    continue;
+  }
+
+  await cp(
+    new URL(entry.name, distDirectory),
+    new URL(entry.name, clientDirectory),
+    { recursive: true },
+  );
+}
 
 await mkdir(outputDirectory, { recursive: true });
 await writeFile(new URL('index.js', outputDirectory), worker, 'utf8');
