@@ -18,6 +18,7 @@ const {
 } = Astro.props;
 const pageTitle = title === "To1in's Blog" ? title : `${title} · To1in's Blog`;
 const canonical = new URL(canonicalPath, Astro.site);
+const socialImage = new URL('/og.png', Astro.site);
 ---
 
 <!doctype html>
@@ -27,15 +28,19 @@ const canonical = new URL(canonicalPath, Astro.site);
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#fbfaf8" />
+    <meta name="theme-color" content="#f4efe6" />
     <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/wp-content/uploads/2021/07/avatar.png" />
     <link rel="alternate" type="application/rss+xml" title="To1in's Blog RSS" href="/rss.xml" />
     <meta property="og:type" content={type} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="To1in's Blog" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content="To1in's Blog：研究、代码与生活的长期记录" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={socialImage} />
     <title>{pageTitle}</title>
     <slot name="head" />
     <script is:inline>

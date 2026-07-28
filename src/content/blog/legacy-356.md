@@ -3,7 +3,7 @@ title: "k8s配置文件语法学习"
 description: "k8s配置文件语法学习 非常好导师，让我0基础从blockchain security转型分布式系统集群管理。 先来点K8S介绍吧 一、Intro of K8S Kubernetes（简称为K8s）是一个开源的容器编排平台，主要用于自动化部署、扩展和管理容器化应用程序。它由谷歌在2014年推出，基于谷歌十多年大规模生产环境中管理容器的经验，并受到Borg系…"
 publishedAt: "2025-03-19T14:01:07+08:00"
 route: "/2025/03/19/k8s配置文件语法学习/"
-categories: ["未分类"]
+categories: ["工程实践"]
 tags: []
 legacyId: 356
 draft: false

@@ -1,18 +1,74 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import aboutHtml from '../data/about.html?raw';
 ---
 
-<BaseLayout title="About To1in" description="关于 To1in。" canonicalPath="/about-to1in/">
-  <section class="section">
-    <div class="shell">
-      <div class="section-heading">
+<BaseLayout
+  title="关于 To1in"
+  description="To1in 的研究方向、经历与联系方式。"
+  canonicalPath="/about-to1in/"
+>
+  <section class="about-hero">
+    <div class="shell about-grid">
+      <aside class="about-portrait">
+        <img
+          src="/wp-content/uploads/2021/07/avatar.png"
+          alt="To1in 的卡通头像"
+          width="600"
+          height="600"
+        />
         <div>
-          <span class="eyebrow">About</span>
-          <h1>About To1in</h1>
+          <span>Based in</span>
+          <strong>Shanghai, China</strong>
+        </div>
+      </aside>
+      <article class="about-copy">
+        <span class="eyebrow">About me</span>
+        <h1>你好，我是 To1in。</h1>
+        <p class="about-lead">
+          上海科技大学 2024 级计算机硕士生，目前在陈浩贤老师课题组学习与研究。
+        </p>
+        <p>
+          我的研究关注形式化方法如何帮助检测和修复区块链程序中的漏洞，也在持续学习程序验证、自动综合与系统方向的工作。
+        </p>
+        <p>
+          在进入研究生活之前，我参与过 CTF 竞赛，主要接触密码学方向。这里既保存技术学习的路径，也记录旅行、音乐和生活里的偶然发现。
+        </p>
+        <div class="about-actions">
+          <a class="button button--primary" href="/文章/">浏览文章 <span aria-hidden="true">→</span></a>
+          <a class="button button--quiet" href="https://github.com/TolinChan" rel="me external">GitHub</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section about-details">
+    <div class="shell about-detail-grid">
+      <div>
+        <span class="eyebrow">Research interests</span>
+        <h2>现在关注的方向</h2>
+      </div>
+      <ul class="interest-list">
+        <li><span>01</span><div><strong>形式化方法</strong><p>程序验证、自动综合，以及可检查的正确性保证。</p></div></li>
+        <li><span>02</span><div><strong>区块链安全</strong><p>智能合约漏洞的检测、定位与修复。</p></div></li>
+        <li><span>03</span><div><strong>密码学与 CTF</strong><p>从竞赛题解与算法学习积累下来的长期兴趣。</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section about-history">
+    <div class="shell about-detail-grid">
+      <div>
+        <span class="eyebrow">Background</span>
+        <h2>来时的路</h2>
+      </div>
+      <div class="history-card">
+        <p>前 X1cT34m 20 级队员、前 SU 战队队员、前天命战队队员。</p>
+        <p>博客从 WordPress 迁移而来，保留了从本科密码学学习、CTF 题解到如今研究工作的完整轨迹。</p>
+        <div class="history-links">
+          <a href="/时光轴/">从时光轴开始阅读 →</a>
+          <a href="/rss.xml">订阅 RSS →</a>
         </div>
       </div>
-      <article class="about-card post-content" set:html={aboutHtml} />
     </div>
   </section>
 </BaseLayout>

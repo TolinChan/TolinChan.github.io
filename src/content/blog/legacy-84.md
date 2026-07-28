@@ -4,7 +4,7 @@ description: "密码学环境配置指北 暑假在家，在家里的电脑上�
 publishedAt: "2021-07-27T14:37:29+08:00"
 updatedAt: "2022-01-09T14:41:57+08:00"
 route: "/2021/07/27/密码学环境配置指北/"
-categories: ["未分类"]
+categories: ["工具与环境"]
 tags: []
 legacyId: 84
 draft: false

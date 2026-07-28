@@ -4,7 +4,7 @@ description: "wp Misc 只因因 首先通过重复的特征氨基酸序列对给
 publishedAt: "2022-12-05T11:17:51+08:00"
 updatedAt: "2022-12-05T11:20:02+08:00"
 route: "/2022/12/05/nctf-2022-official-writeup-crypto/"
-categories: ["未分类"]
+categories: ["CTF"]
 tags: []
 legacyId: 300
 draft: false

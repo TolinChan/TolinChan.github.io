@@ -3,7 +3,7 @@ title: "Lattice exercise-1"
 description: "Lattice exercise [NPUCTF2020]babyLCG from Crypto.Util.number import * from Crypto.Cipher import AES from secret import flag class LCG: def __init__(self, bit_length): m = getPrime…"
 publishedAt: "2021-07-31T00:34:44+08:00"
 route: "/2021/07/31/lattice-exercise-1/"
-categories: ["未分类"]
+categories: ["格密码"]
 tags: []
 legacyId: 120
 draft: false

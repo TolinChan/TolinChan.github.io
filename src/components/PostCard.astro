@@ -1,6 +1,11 @@
 ---
 import type { BlogPost } from '../utils/posts';
-import { formatDate, termHref } from '../utils/posts';
+import {
+  formatDate,
+  getPostCategories,
+  getPostDescription,
+  termHref,
+} from '../utils/posts';
 
 interface Props {
   post: BlogPost;
@@ -8,9 +13,8 @@ interface Props {
 }
 
 const { post, featured = false } = Astro.props;
-const description = (post.data.description || '这篇文章暂时没有摘要。')
-  .replace(/^markDown\d+\s*/i, '')
-  .trim();
+const description = getPostDescription(post);
+const categories = getPostCategories(post);
 ---
 
 <article class:list={['post-card', { 'post-card--featured': featured }]}>
@@ -18,9 +22,9 @@ const description = (post.data.description || '这篇文章暂时没有摘要。
     <time datetime={post.data.publishedAt.toISOString()}>
       {formatDate(post.data.publishedAt)}
     </time>
-    {post.data.categories[0] && (
-      <a href={termHref('category', post.data.categories[0])}>
-        {post.data.categories[0]}
+    {categories[0] && (
+      <a href={termHref('category', categories[0])}>
+        {categories[0]}
       </a>
     )}
   </div>

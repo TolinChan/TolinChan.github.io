@@ -47,6 +47,15 @@
   function enhancePost() {
     const article = document.querySelector<HTMLElement>('.post-content');
     if (!article) return;
+    const pageTitle = document.querySelector<HTMLElement>('.article-header h1');
+    const firstLegacyTitle = article.querySelector<HTMLElement>('h1');
+    if (
+      pageTitle &&
+      firstLegacyTitle &&
+      pageTitle.textContent?.trim() === firstLegacyTitle.textContent?.trim()
+    ) {
+      firstLegacyTitle.remove();
+    }
     buildToc(article);
     renderMathInElement(article, {
       throwOnError: false,

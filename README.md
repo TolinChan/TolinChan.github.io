@@ -44,7 +44,7 @@ Variables：
 
 1. 在 GitHub 验证 `tolinchan.xyz`，并在 Pages 设置中添加
    `blog.tolinchan.xyz`。
-2. 将 DNSPod 中 `blog` 的 A 记录 `116.62.4.97` 替换为指向
+2. 将 DNSPod 中 `blog` 的旧 A 记录替换为指向
    `tolinchan.github.io` 的 CNAME。
 3. DNS 生效且站点正常后启用 Enforce HTTPS。
 

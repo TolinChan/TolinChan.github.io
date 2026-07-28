@@ -3,7 +3,7 @@ title: "web入门3"
 description: "web入门3 命令执行 web29 error_reporting(0); if(isset($_GET['c'])){ $c = $_GET['c']; if(!preg_match(\"/flag/i\", $c)){ eval($c); } }else{ highlight_file(__FILE__); } preg_match()是字符串匹配函数，函…"
 publishedAt: "2022-08-01T15:40:18+08:00"
 route: "/2022/08/01/web入门3/"
-categories: ["未分类"]
+categories: ["Web 安全"]
 tags: []
 legacyId: 285
 draft: false

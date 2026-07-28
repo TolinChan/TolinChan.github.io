@@ -5,24 +5,34 @@ const navigation = [
   { href: '/时光轴/', label: '时光轴' },
   { href: '/友情链接/', label: '友情链接' },
   { href: '/旅游相册/', label: '旅游相册' },
-  { href: '/about-to1in/', label: 'About' },
+  { href: '/about-to1in/', label: '关于' },
 ];
 
 const currentPath = Astro.url.pathname;
+const isCurrent = (href: string) =>
+  href === '/' ? currentPath === href : currentPath.startsWith(href);
 ---
 
 <header class="site-header">
   <div class="shell header-inner">
     <a class="brand" href="/" aria-label="To1in's Blog 首页">
-      <span class="brand-name">To1in</span>
-      <span class="brand-divider" aria-hidden="true">/</span>
-      <span class="brand-note">研究手记</span>
+      <img
+        class="brand-avatar"
+        src="/wp-content/uploads/2021/07/avatar.png"
+        alt=""
+        width="40"
+        height="40"
+      />
+      <span class="brand-copy">
+        <span class="brand-name">To1in</span>
+        <span class="brand-note">Research journal</span>
+      </span>
     </a>
     <nav class="main-nav" aria-label="主导航">
       {navigation.map((item) => (
         <a
           href={item.href}
-          aria-current={currentPath === item.href ? 'page' : undefined}
+          aria-current={isCurrent(item.href) ? 'page' : undefined}
         >
           {item.label}
         </a>

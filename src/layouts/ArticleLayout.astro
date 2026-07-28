@@ -1,6 +1,11 @@
 ---
 import type { BlogPost } from '../utils/posts';
-import { formatDate, termHref } from '../utils/posts';
+import {
+  formatDate,
+  getPostCategories,
+  getPostDescription,
+  termHref,
+} from '../utils/posts';
 import BaseLayout from './BaseLayout.astro';
 import LegacyComments from '../components/LegacyComments.astro';
 import Giscus from '../components/Giscus.astro';
@@ -11,11 +16,12 @@ interface Props {
 }
 
 const { post } = Astro.props;
+const categories = getPostCategories(post);
 ---
 
 <BaseLayout
   title={post.data.title}
-  description={post.data.description}
+  description={getPostDescription(post, 150)}
   canonicalPath={post.data.route}
   type="article"
 >
@@ -34,9 +40,9 @@ const { post } = Astro.props;
             </time>
           )}
         </div>
-        {(post.data.categories.length > 0 || post.data.tags.length > 0) && (
+        {(categories.length > 0 || post.data.tags.length > 0) && (
           <div class="article-terms">
-            {post.data.categories.map((category) => (
+            {categories.map((category) => (
               <a href={termHref('category', category)}>{category}</a>
             ))}
             {post.data.tags.map((tag) => (

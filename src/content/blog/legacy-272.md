@@ -3,7 +3,7 @@ title: "web入门1"
 description: "web入门 密码学卷不动哩，学web辣。 刷ctfshow哩 信息收集 web1 F12看源码就有 web2 通过Ctrl+U或者在url前面添加view-source:可获得flag 或者使用burpsuite抓包，抓到包后ctrl+r进response，然后发包，就可以看到返回的源码，拖到下面有flag web3 同上，通过bp抓包查看Response…"
 publishedAt: "2022-07-20T11:21:30+08:00"
 route: "/2022/07/20/web入门1/"
-categories: ["未分类"]
+categories: ["Web 安全"]
 tags: []
 legacyId: 272
 draft: false

@@ -2,13 +2,13 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
-import { sortPosts, termHref } from '../utils/posts';
+import { getPostCategories, sortPosts, termHref } from '../utils/posts';
 
 const posts = sortPosts(await getCollection('blog', ({ data }) => !data.draft));
-const latest = posts.slice(0, 8);
+const latest = posts.slice(0, 6);
 const categoryCounts = new Map<string, number>();
 for (const post of posts) {
-  for (const category of post.data.categories) {
+  for (const category of getPostCategories(post)) {
     categoryCounts.set(category, (categoryCounts.get(category) || 0) + 1);
   }
 }
@@ -17,26 +17,74 @@ const categories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]);
 
 <BaseLayout>
   <section class="hero">
-    <div class="shell hero-inner">
-      <span class="eyebrow">To1in / Research Notes</span>
-      <h1>拆解问题，<span>留下思考。</span></h1>
-      <div class="hero-footer">
-        <p class="hero-copy">
-          密码学、安全研究、CTF，以及偶尔偏离技术轨道的生活片段。
+    <div class="shell hero-grid">
+      <div class="hero-content">
+        <span class="eyebrow">ShanghaiTech · CS · Research Notes</span>
+        <h1>你好，我是 <span>To1in。</span></h1>
+        <p class="hero-lead">
+          上海科技大学计算机硕士生，陈浩贤老师课题组成员。关注形式化方法、程序验证，以及区块链漏洞的检测与修复。
         </p>
-        <p class="hero-index">Security · Crypto · Life<br />{posts.length} 篇公开文章</p>
+        <ul class="hero-topics" aria-label="关注方向">
+          <li>Formal Methods</li>
+          <li>Blockchain Security</li>
+          <li>Cryptography</li>
+        </ul>
+        <div class="hero-actions">
+          <a class="button button--primary" href="/文章/">阅读技术文章 <span aria-hidden="true">→</span></a>
+          <a class="button button--quiet" href="/about-to1in/">更多关于我</a>
+        </div>
+        <p class="hero-note">也记录旅行、音乐，以及研究之外仍值得记住的日常。</p>
       </div>
+      <figure class="hero-portrait">
+        <div class="portrait-frame">
+          <img
+            src="/wp-content/uploads/2021/07/avatar.png"
+            alt="To1in 的卡通头像"
+            width="600"
+            height="600"
+            loading="eager"
+          />
+        </div>
+        <figcaption>
+          <span>Currently exploring</span>
+          <strong>用形式化方法让程序更可靠。</strong>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
-  <section class="section">
+  <section class="focus-section" aria-label="博客主题">
+    <div class="shell focus-grid">
+      <div class="focus-intro">
+        <span class="eyebrow">What I write about</span>
+        <p>从密码题解走到程序验证，也把研究之外的生活认真留下。</p>
+      </div>
+      <a href="/category/ctf/">
+        <span>01</span>
+        <strong>密码与安全</strong>
+        <small>CTF · Crypto · Blockchain</small>
+      </a>
+      <a href="/category/论文阅读/">
+        <span>02</span>
+        <strong>研究与学习</strong>
+        <small>Paper · Formal Methods · Systems</small>
+      </a>
+      <a href="/时光轴/">
+        <span>03</span>
+        <strong>生活与见闻</strong>
+        <small>Travel · Music · Yearly Notes</small>
+      </a>
+    </div>
+  </section>
+
+  <section class="section section--latest">
     <div class="shell">
       <div class="section-heading">
         <div>
           <span class="eyebrow">Latest writing</span>
-          <h2>最近文章</h2>
+          <h2>最近写下的</h2>
         </div>
-        <a href="/文章/">查看全部文章 →</a>
+        <a class="section-link" href="/文章/">全部 {posts.length} 篇文章 →</a>
       </div>
       <div class="post-list">
         {latest.map((post, index) => <PostCard post={post} featured={index === 0} />)}
@@ -50,7 +98,7 @@ const categories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]);
         <div class="section-heading">
           <div>
             <span class="eyebrow">Topics</span>
-            <h2>文章分类</h2>
+            <h2>沿着主题阅读</h2>
           </div>
         </div>
         <div class="term-cloud">

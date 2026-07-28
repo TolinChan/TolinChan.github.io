@@ -3,7 +3,7 @@ title: "web入门2"
 description: "web入门2 爆破 web21 先输入admin、admin，抓包，发现输入的内容base64了，而且中间用:隔开，提供了字典，所以直接爆破密码，注意最下面的url编码不要勾上，不然会有编码问题，爆不出来。 web22 子域名爆破，现在题目无了。 子域名收集方法 查询 DNS 解析记录 如 MX CNAME 记录，使用 nslookup 命令就可以查询这些…"
 publishedAt: "2022-07-28T17:30:01+08:00"
 route: "/2022/07/28/web入门2/"
-categories: ["未分类"]
+categories: ["Web 安全"]
 tags: []
 legacyId: 282
 draft: false
