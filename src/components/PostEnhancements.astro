@@ -44,6 +44,34 @@
     });
   }
 
+  function enableReadingProgress(article: HTMLElement) {
+    const articleElement = article.closest<HTMLElement>('.article');
+    if (!articleElement) return;
+
+    document.body.dataset.readingProgress = 'true';
+    let frame: number | undefined;
+
+    const updateProgress = () => {
+      frame = undefined;
+      const articleTop = articleElement.getBoundingClientRect().top + window.scrollY;
+      const articleBottom = articleTop + articleElement.offsetHeight;
+      const readingPoint = window.scrollY + window.innerHeight * 0.45;
+      const progress = Math.min(
+        1,
+        Math.max(0, (readingPoint - articleTop) / Math.max(articleBottom - articleTop, 1)),
+      );
+      document.documentElement.style.setProperty('--reading-progress', `${progress * 100}%`);
+    };
+
+    const requestProgressUpdate = () => {
+      if (frame === undefined) frame = window.requestAnimationFrame(updateProgress);
+    };
+
+    window.addEventListener('scroll', requestProgressUpdate, { passive: true });
+    window.addEventListener('resize', requestProgressUpdate, { passive: true });
+    requestProgressUpdate();
+  }
+
   function enhancePost() {
     const article = document.querySelector<HTMLElement>('.post-content');
     if (!article) return;
@@ -68,6 +96,7 @@
         { left: '$', right: '$', display: false },
       ],
     });
+    enableReadingProgress(article);
   }
 
   enhancePost();

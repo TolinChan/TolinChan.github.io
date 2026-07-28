@@ -17,7 +17,7 @@ const description = getPostDescription(post);
 const categories = getPostCategories(post);
 ---
 
-<article class:list={['post-card', { 'post-card--featured': featured }]}>
+<article class:list={['post-card', { 'post-card--featured': featured }]} data-motion-group="posts">
   <div class="post-card-meta">
     <time datetime={post.data.publishedAt.toISOString()}>
       {formatDate(post.data.publishedAt)}

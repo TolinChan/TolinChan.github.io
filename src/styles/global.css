@@ -18,6 +18,8 @@
   --code-bg: #ebe8e1;
   --shadow: 0 24px 70px rgba(55, 46, 34, 0.11);
   --radius: 14px;
+  --motion-ease: cubic-bezier(0.22, 0.8, 0.24, 1);
+  --motion-bounce: cubic-bezier(0.2, 0.95, 0.26, 1.22);
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   --font-serif: ui-serif, "Noto Serif SC", "Source Han Serif SC", "Songti SC",
@@ -1300,6 +1302,262 @@ main {
   line-height: 0.8;
 }
 
+@keyframes hero-reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--intro-x, 0px), var(--intro-y, 22px), 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes portrait-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 38px, 0) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes portrait-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(1.5deg);
+  }
+
+  50% {
+    transform: translate3d(0, -10px, 0) rotate(0.35deg);
+  }
+}
+
+@keyframes about-portrait-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-1.5deg);
+  }
+
+  50% {
+    transform: translate3d(0, -10px, 0) rotate(-0.35deg);
+  }
+}
+
+@keyframes portrait-accent-breathe {
+  0%,
+  100% {
+    opacity: 0.76;
+    transform: rotate(-5deg) scale(0.97);
+  }
+
+  50% {
+    opacity: 1;
+    transform: rotate(-3deg) scale(1.035);
+  }
+}
+
+@keyframes reading-progress-shimmer {
+  from {
+    background-position: 180% 0;
+  }
+
+  to {
+    background-position: -30% 0;
+  }
+}
+
+@keyframes brand-avatar-pop {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  45% {
+    transform: translateY(-4px) scale(1.13) rotate(-6deg);
+  }
+
+  70% {
+    transform: translateY(1px) scale(0.98) rotate(2deg);
+  }
+}
+
+.hero-content [data-hero-step] {
+  --intro-x: 0px;
+  --intro-y: 22px;
+  animation: hero-reveal 680ms var(--motion-ease) both;
+}
+
+.hero-content [data-hero-step='eyebrow'] {
+  --intro-x: -18px;
+  --intro-y: 8px;
+  animation-delay: 20ms;
+}
+
+.hero-content [data-hero-step='title'] {
+  --intro-y: 28px;
+  animation-delay: 110ms;
+}
+
+.hero-content [data-hero-step='lead'] {
+  --intro-x: -10px;
+  --intro-y: 18px;
+  animation-delay: 200ms;
+}
+
+.hero-content [data-hero-step='topics'] {
+  --intro-y: 18px;
+  animation-delay: 290ms;
+}
+
+.hero-content [data-hero-step='actions'] {
+  --intro-x: -8px;
+  --intro-y: 18px;
+  animation-delay: 380ms;
+}
+
+.hero-content [data-hero-step='note'] {
+  --intro-y: 14px;
+  animation-delay: 470ms;
+}
+
+.hero-portrait {
+  animation: portrait-enter 820ms var(--motion-bounce) 520ms both;
+}
+
+.portrait-frame {
+  animation: portrait-float 4.8s var(--motion-ease) 1.35s infinite;
+  transition: transform 260ms var(--motion-bounce), box-shadow 260ms ease;
+}
+
+.portrait-frame::before {
+  animation: portrait-accent-breathe 4.8s ease-in-out 1.35s infinite;
+  transition: opacity 260ms ease, transform 260ms var(--motion-bounce);
+}
+
+.about-portrait {
+  animation: about-portrait-float 5.1s var(--motion-ease) 360ms infinite;
+  transition: transform 260ms var(--motion-bounce), box-shadow 260ms ease;
+}
+
+.about-portrait::before {
+  animation: portrait-accent-breathe 5.1s ease-in-out 360ms infinite;
+}
+
+.site-header::after {
+  position: absolute;
+  right: auto;
+  bottom: -2px;
+  left: 0;
+  width: var(--reading-progress, 0%);
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--blue-strong), var(--sage), var(--accent));
+  background-size: 220% 100%;
+  box-shadow: 0 1px 8px color-mix(in srgb, var(--accent) 36%, transparent);
+  content: '';
+  pointer-events: none;
+}
+
+body[data-reading-progress='true'] .site-header::after {
+  animation: reading-progress-shimmer 5s linear infinite;
+}
+
+.motion-ready .motion-reveal {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition: opacity 680ms var(--motion-ease), transform 680ms var(--motion-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.motion-ready .motion-reveal.is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    transform: translateY(-3px);
+  }
+
+  .button:hover span[aria-hidden='true'],
+  .post-card:hover .post-card-link span {
+    transform: translateX(4px);
+  }
+
+  .button span[aria-hidden='true'],
+  .post-card-link span {
+    transition: transform 180ms var(--motion-bounce);
+  }
+
+  .brand:hover .brand-avatar {
+    animation: brand-avatar-pop 480ms var(--motion-bounce) both;
+  }
+
+  .hero-portrait:hover .portrait-frame {
+    animation: none;
+    box-shadow: 0 30px 78px rgba(55, 46, 34, 0.18);
+    transform: rotate(0deg) scale(1.035);
+  }
+
+  .hero-portrait:hover .portrait-frame::before {
+    animation: none;
+    opacity: 1;
+    transform: rotate(-3deg) scale(1.06);
+  }
+
+  .about-portrait:hover {
+    animation: none;
+    box-shadow: 0 30px 78px rgba(55, 46, 34, 0.18);
+    transform: rotate(0deg) scale(1.035);
+  }
+
+  .focus-grid > a:hover,
+  .motion-ready .focus-grid > a.motion-reveal.is-revealed:hover {
+    position: relative;
+    z-index: 1;
+    background: color-mix(in srgb, var(--accent-soft) 64%, transparent);
+    box-shadow: 0 18px 34px rgba(55, 46, 34, 0.13);
+    transform: translateY(-6px) rotate(-0.45deg);
+  }
+
+  .focus-grid > a {
+    transition: background-color 220ms ease, transform 260ms var(--motion-bounce), box-shadow 260ms ease;
+  }
+
+  .post-card:hover,
+  .motion-ready .post-card.motion-reveal.is-revealed:hover {
+    background: color-mix(in srgb, var(--blue-soft) 74%, transparent);
+    border-color: color-mix(in srgb, var(--blue) 54%, var(--border));
+    transform: translateX(8px);
+  }
+
+  .post-card {
+    transition: background-color 220ms ease, padding 160ms ease, border-color 220ms ease, transform 260ms var(--motion-ease);
+  }
+
+  .friend-card:hover,
+  .motion-ready .friend-card.motion-reveal.is-revealed:hover {
+    background: var(--surface-soft);
+    border-color: var(--blue);
+    box-shadow: 0 18px 34px rgba(55, 46, 34, 0.13);
+    transform: translateY(-6px) rotate(0.35deg);
+  }
+
+  .friend-card {
+    transition: background-color 220ms ease, border-color 220ms ease, box-shadow 260ms ease, transform 260ms var(--motion-bounce);
+  }
+}
+
+@media (hover: none) {
+  .button:hover {
+    transform: none;
+  }
+}
+
 @media (max-width: 900px) {
   .main-nav {
     flex: 1;
@@ -1499,6 +1757,8 @@ main {
   *,
   *::before,
   *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }

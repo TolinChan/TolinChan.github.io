@@ -1,0 +1,45 @@
+<script>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const revealed = new Set<Element>();
+    const staggeredGroups = [
+      '[data-motion-group="focus"]',
+      '[data-motion-group="posts"]',
+      '[data-motion-group="friends"]',
+      '.term-cloud > a',
+      '.interest-list > li',
+      '.timeline-year',
+      '.gallery-item',
+    ];
+
+    staggeredGroups.forEach((selector) => {
+      document.querySelectorAll<HTMLElement>(selector).forEach((element, index) => {
+        revealed.add(element);
+        element.classList.add('motion-reveal');
+        element.style.setProperty('--reveal-delay', `${Math.min(index, 4) * 80}ms`);
+      });
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-motion-reveal], .about-detail-grid > *').forEach((element) => {
+      if (revealed.has(element)) return;
+      revealed.add(element);
+      element.classList.add('motion-reveal');
+    });
+
+    if (revealed.size) {
+      document.documentElement.classList.add('motion-ready');
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+      );
+      revealed.forEach((element) => observer.observe(element));
+    }
+  }
+</script>

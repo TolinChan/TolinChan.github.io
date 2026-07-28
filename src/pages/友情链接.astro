@@ -24,7 +24,7 @@ const friends = friendData as Friend[];
       </div>
       <div class="friends-grid">
         {friends.map((friend) => (
-          <a class="friend-card" href={friend.url} rel="friend external noopener">
+          <a class="friend-card" href={friend.url} rel="friend external noopener" data-motion-group="friends">
             {friend.avatar ? (
               <img
                 class="friend-avatar"

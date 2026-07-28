@@ -20,21 +20,21 @@ const categories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]);
   <section class="hero">
     <div class="shell hero-grid">
       <div class="hero-content">
-        <span class="eyebrow">ShanghaiTech · CS · Research Notes</span>
-        <h1>你好，我是 <span>To1in。</span></h1>
-        <p class="hero-lead">
+        <span class="eyebrow" data-hero-step="eyebrow">ShanghaiTech · CS · Research Notes</span>
+        <h1 data-hero-step="title">你好，我是 <span>To1in。</span></h1>
+        <p class="hero-lead" data-hero-step="lead">
           上海科技大学计算机硕士生，陈浩贤老师课题组成员。关注形式化方法、程序验证，以及区块链漏洞的检测与修复。
         </p>
-        <ul class="hero-topics" aria-label="关注方向">
+        <ul class="hero-topics" aria-label="关注方向" data-hero-step="topics">
           <li>Formal Methods</li>
           <li>Blockchain Security</li>
           <li>Cryptography</li>
         </ul>
-        <div class="hero-actions">
+        <div class="hero-actions" data-hero-step="actions">
           <a class="button button--primary" href="/文章/">阅读技术文章 <span aria-hidden="true">→</span></a>
           <a class="button button--quiet" href="/about-to1in/">更多关于我</a>
         </div>
-        <p class="hero-note">也记录旅行、音乐，以及研究之外仍值得记住的日常。</p>
+        <p class="hero-note" data-hero-step="note">也记录旅行、音乐，以及研究之外仍值得记住的日常。</p>
       </div>
       <figure class="hero-portrait">
         <div class="portrait-frame">
@@ -56,21 +56,21 @@ const categories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]);
 
   <section class="focus-section" aria-label="博客主题">
     <div class="shell focus-grid">
-      <div class="focus-intro">
+      <div class="focus-intro" data-motion-reveal>
         <span class="eyebrow">What I write about</span>
         <p>从密码题解走到程序验证，也把研究之外的生活认真留下。</p>
       </div>
-      <a href="/category/ctf/">
+      <a href="/category/ctf/" data-motion-group="focus">
         <span>01</span>
         <strong>密码与安全</strong>
         <small>CTF · Crypto · Blockchain</small>
       </a>
-      <a href="/category/论文阅读/">
+      <a href="/category/论文阅读/" data-motion-group="focus">
         <span>02</span>
         <strong>研究与学习</strong>
         <small>Paper · Formal Methods · Systems</small>
       </a>
-      <a href="/时光轴/">
+      <a href="/时光轴/" data-motion-group="focus">
         <span>03</span>
         <strong>生活与见闻</strong>
         <small>Travel · Music · Yearly Notes</small>
@@ -80,7 +80,7 @@ const categories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]);
 
   <section class="section section--latest">
     <div class="shell">
-      <div class="section-heading">
+      <div class="section-heading" data-motion-reveal>
         <div>
           <span class="eyebrow">Latest writing</span>
           <h2>最近写下的</h2>
@@ -96,7 +96,7 @@ const categories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]);
   {categories.length > 0 && (
     <section class="section">
       <div class="shell">
-        <div class="section-heading">
+        <div class="section-heading" data-motion-reveal>
           <div>
             <span class="eyebrow">Topics</span>
             <h2>沿着主题阅读</h2>
