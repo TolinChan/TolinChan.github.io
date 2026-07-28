@@ -5,6 +5,7 @@ import friendData from '../data/friends.json';
 interface Friend {
   name: string;
   url: string;
+  avatar: string;
   description: string;
 }
 
@@ -24,8 +25,26 @@ const friends = friendData as Friend[];
       <div class="friends-grid">
         {friends.map((friend) => (
           <a class="friend-card" href={friend.url} rel="friend external noopener">
-            <strong>{friend.name}</strong>
-            <span>{friend.description || new URL(friend.url).hostname}</span>
+            {friend.avatar ? (
+              <img
+                class="friend-avatar"
+                src={friend.avatar}
+                alt={`${friend.name} 的头像`}
+                width="72"
+                height="72"
+                loading="lazy"
+                decoding="async"
+                referrerpolicy="no-referrer"
+              />
+            ) : (
+              <span class="friend-avatar friend-avatar--fallback" aria-hidden="true">
+                {friend.name.slice(0, 1).toUpperCase()}
+              </span>
+            )}
+            <span class="friend-card-copy">
+              <strong>{friend.name}</strong>
+              <span>{friend.description || new URL(friend.url).hostname}</span>
+            </span>
           </a>
         ))}
       </div>

@@ -1006,8 +1006,12 @@ main {
 }
 
 .friend-card {
-  min-height: 9rem;
-  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  min-height: 7.75rem;
+  padding: 1rem 1.2rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -1021,13 +1025,35 @@ main {
   border-color: var(--blue);
 }
 
+.friend-avatar {
+  width: 4.5rem;
+  height: 4.5rem;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface-soft);
+  object-fit: cover;
+}
+
+.friend-avatar--fallback {
+  display: grid;
+  place-items: center;
+  color: var(--blue);
+  font-size: 1.35rem;
+  font-weight: 750;
+}
+
+.friend-card-copy {
+  min-width: 0;
+}
+
 .friend-card strong {
   display: block;
   margin-bottom: 0.45rem;
   font-size: 1.08rem;
 }
 
-.friend-card span {
+.friend-card-copy > span {
+  display: block;
   color: var(--muted);
   font-size: 0.9rem;
 }

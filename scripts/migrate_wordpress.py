@@ -122,6 +122,14 @@ def rewrite_internal_urls(value: str) -> str:
     )
 
 
+def friend_avatar_url(value: str) -> str:
+    value = rewrite_internal_urls(html.unescape(value)).strip()
+    parsed = urllib.parse.urlparse(value)
+    if parsed.scheme == "http" and parsed.hostname == "q1.qlogo.cn":
+        return parsed._replace(scheme="https").geturl()
+    return value
+
+
 def clean_xml(path: Path) -> tuple[ET.Element, dict[str, int]]:
     source = path.read_text(encoding="utf-8", errors="replace")
     removed = collections.Counter(ord(match.group()) for match in ILLEGAL_XML.finditer(source))
@@ -330,6 +338,7 @@ def extract_friends(sql_path: Path) -> list[dict[str, str]]:
             {
                 "name": html.unescape(str(row.get("link_name") or "")).strip(),
                 "url": str(row.get("link_url") or "").strip(),
+                "avatar": friend_avatar_url(str(row.get("link_image") or "")),
                 "description": plain_text(str(row.get("link_description") or "")),
             }
         )

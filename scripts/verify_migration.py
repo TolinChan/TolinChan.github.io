@@ -69,6 +69,12 @@ def verify() -> None:
     if len(posts) != EXPECTED["publishedPosts"]:
         fail(f"expected 42 legacy Markdown files, found {len(posts)}")
 
+    friends = json.loads((ROOT / "src" / "data" / "friends.json").read_text(encoding="utf-8"))
+    if len(friends) != EXPECTED["friends"]:
+        fail(f"expected 26 friends, found {len(friends)}")
+    if sum(bool(friend.get("avatar")) for friend in friends) != 25:
+        fail("expected 25 friends with restored WordPress avatars")
+
     media_root = ROOT / "public" / "wp-content" / "uploads"
     media = [path for path in media_root.rglob("*") if path.is_file()]
     if len(media) != EXPECTED["selectedMediaFiles"]:
@@ -110,7 +116,7 @@ def verify() -> None:
         fail(f"unexpected CNAME: {cname}")
 
     print(
-        "PASS: 42 posts, 5 pages, 26 friends, 31 gallery images, "
+        "PASS: 42 posts, 5 pages, 26 friends with 25 avatars, 31 gallery images, "
         "2 comments, 157 media files, routes and secret hygiene verified"
     )
 
