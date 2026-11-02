@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
-import { profileAvatar, profileAvatarAlt } from '../data/profile';
 import { getPostCategories, sortPosts, termHref } from '../utils/posts';
 
 const posts = sortPosts(await getCollection('blog', ({ data }) => !data.draft));
@@ -20,8 +19,8 @@ const categories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]);
   <section class="hero">
     <div class="shell hero-grid">
       <div class="hero-content">
-        <span class="eyebrow" data-hero-step="eyebrow">ShanghaiTech · CS · Research Notes</span>
-        <h1 data-hero-step="title">你好，我是 <span>To1in。</span></h1>
+        <span class="eyebrow" data-hero-step="eyebrow">Research, code & a little life</span>
+        <h1 data-hero-step="title">你好，我是<br /><span>To1in.</span></h1>
         <p class="hero-lead" data-hero-step="lead">
           上海科技大学计算机硕士生，陈浩贤老师课题组成员。关注形式化方法、程序验证，以及区块链漏洞的检测与修复。
         </p>
@@ -31,49 +30,42 @@ const categories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]);
           <li>Cryptography</li>
         </ul>
         <div class="hero-actions" data-hero-step="actions">
-          <a class="button button--primary" href="/文章/">阅读技术文章 <span aria-hidden="true">→</span></a>
-          <a class="button button--quiet" href="/about-to1in/">更多关于我</a>
+          <a class="button button--primary" href="/文章/">读一读我的文章 <span aria-hidden="true">↗</span></a>
+          <a class="button button--quiet" href="/about-to1in/">关于我 <span aria-hidden="true">→</span></a>
         </div>
         <p class="hero-note" data-hero-step="note">也记录旅行、音乐，以及研究之外仍值得记住的日常。</p>
       </div>
-      <figure class="hero-portrait">
-        <div class="portrait-frame">
-          <img
-            src={profileAvatar}
-            alt={profileAvatarAlt}
-            width="600"
-            height="600"
-            loading="eager"
-          />
+      <aside class="hero-notebook" aria-label="博客简介" data-motion-reveal>
+        <div class="notebook-topline">
+          <span>THE PERSONAL NOTEBOOK</span>
+          <span aria-hidden="true">↗</span>
         </div>
-        <figcaption>
-          <span>Currently exploring</span>
-          <strong>用形式化方法让程序更可靠。</strong>
-        </figcaption>
-      </figure>
+        <span class="notebook-mark" aria-hidden="true">t<span>.</span></span>
+        <p>一份持续生长的<br />个人笔记。</p>
+        <div class="notebook-bottomline">
+          <span>{posts.length} 篇记录 · 始于 2021</span>
+          <a href="/时光轴/" aria-label="浏览博客时光轴">翻开看看 <span aria-hidden="true">→</span></a>
+        </div>
+      </aside>
     </div>
   </section>
 
   <section class="focus-section" aria-label="博客主题">
     <div class="shell focus-grid">
-      <div class="focus-intro" data-motion-reveal>
-        <span class="eyebrow">What I write about</span>
-        <p>从密码题解走到程序验证，也把研究之外的生活认真留下。</p>
-      </div>
       <a href="/category/ctf/" data-motion-group="focus">
         <span>01</span>
         <strong>密码与安全</strong>
-        <small>CTF · Crypto · Blockchain</small>
+        <small>CTF / Crypto <span aria-hidden="true">↗</span></small>
       </a>
       <a href="/category/论文阅读/" data-motion-group="focus">
         <span>02</span>
         <strong>研究与学习</strong>
-        <small>Paper · Formal Methods · Systems</small>
+        <small>Papers / Formal Methods <span aria-hidden="true">↗</span></small>
       </a>
       <a href="/时光轴/" data-motion-group="focus">
         <span>03</span>
         <strong>生活与见闻</strong>
-        <small>Travel · Music · Yearly Notes</small>
+        <small>Travel / Music / Life <span aria-hidden="true">↗</span></small>
       </a>
     </div>
   </section>
@@ -83,12 +75,12 @@ const categories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]);
       <div class="section-heading" data-motion-reveal>
         <div>
           <span class="eyebrow">Latest writing</span>
-          <h2>最近写下的</h2>
+          <h2>最近的记录<span class="heading-dot">.</span></h2>
         </div>
         <a class="section-link" href="/文章/">全部 {posts.length} 篇文章 →</a>
       </div>
       <div class="post-list">
-        {latest.map((post, index) => <PostCard post={post} featured={index === 0} />)}
+        {latest.map((post) => <PostCard post={post} />)}
       </div>
     </div>
   </section>
