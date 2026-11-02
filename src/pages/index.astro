@@ -19,8 +19,8 @@ const categories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]);
   <section class="hero">
     <div class="shell hero-grid">
       <div class="hero-content">
-        <span class="eyebrow" data-hero-step="eyebrow">Research, code & a little life</span>
-        <h1 data-hero-step="title">你好，我是<br /><span>To1in.</span></h1>
+        <span class="eyebrow" data-hero-step="eyebrow">To1in 的个人博客</span>
+        <h1 class="heading-1" data-hero-step="title">你好，我是<br /><span>To1in.</span></h1>
         <p class="hero-lead" data-hero-step="lead">
           上海科技大学计算机硕士生，陈浩贤老师课题组成员。关注形式化方法、程序验证，以及区块链漏洞的检测与修复。
         </p>
@@ -31,16 +31,16 @@ const categories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]);
         </ul>
         <div class="hero-actions" data-hero-step="actions">
           <a class="button button--primary" href="/文章/">读一读我的文章 <span aria-hidden="true">↗</span></a>
-          <a class="button button--quiet" href="/about-to1in/">关于我 <span aria-hidden="true">→</span></a>
+          <a class="text-link" href="/about-to1in/">关于我 <span aria-hidden="true">→</span></a>
         </div>
         <p class="hero-note" data-hero-step="note">也记录旅行、音乐，以及研究之外仍值得记住的日常。</p>
       </div>
       <aside class="hero-notebook" aria-label="博客简介" data-motion-reveal>
         <div class="notebook-topline">
-          <span>THE PERSONAL NOTEBOOK</span>
+          <span>Personal notebook</span>
           <span aria-hidden="true">↗</span>
         </div>
-        <span class="notebook-mark" aria-hidden="true">t<span>.</span></span>
+        <span class="notebook-mark" aria-hidden="true">t.</span>
         <p>一份持续生长的<br />个人笔记。</p>
         <div class="notebook-bottomline">
           <span>{posts.length} 篇记录 · 始于 2021</span>
@@ -53,17 +53,14 @@ const categories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]);
   <section class="focus-section" aria-label="博客主题">
     <div class="shell focus-grid">
       <a href="/category/ctf/" data-motion-group="focus">
-        <span>01</span>
         <strong>密码与安全</strong>
         <small>CTF / Crypto <span aria-hidden="true">↗</span></small>
       </a>
       <a href="/category/论文阅读/" data-motion-group="focus">
-        <span>02</span>
         <strong>研究与学习</strong>
         <small>Papers / Formal Methods <span aria-hidden="true">↗</span></small>
       </a>
       <a href="/时光轴/" data-motion-group="focus">
-        <span>03</span>
         <strong>生活与见闻</strong>
         <small>Travel / Music / Life <span aria-hidden="true">↗</span></small>
       </a>
@@ -74,8 +71,8 @@ const categories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]);
     <div class="shell">
       <div class="section-heading" data-motion-reveal>
         <div>
-          <span class="eyebrow">Latest writing</span>
-          <h2>最近的记录<span class="heading-dot">.</span></h2>
+          <span class="eyebrow">Writing</span>
+          <h2 class="heading-3">最近的记录</h2>
         </div>
         <a class="section-link" href="/文章/">全部 {posts.length} 篇文章 →</a>
       </div>

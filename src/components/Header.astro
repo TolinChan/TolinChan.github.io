@@ -48,8 +48,28 @@ const isCurrent = (href: string) =>
     >
       <span aria-hidden="true">◐</span>
     </button>
+    <button class="menu-toggle" id="menu-open" type="button" aria-label="打开导航菜单" aria-haspopup="dialog" aria-controls="mobile-menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
   </div>
 </header>
+
+<dialog class="mobile-menu" id="mobile-menu" aria-labelledby="mobile-menu-title">
+  <div class="mobile-menu-top">
+    <span class="brand-name" id="mobile-menu-title">To1in<span class="brand-dot">.</span></span>
+    <button class="menu-toggle menu-close" id="menu-close" type="button" aria-label="关闭导航菜单" autofocus>
+      <span></span><span></span>
+    </button>
+  </div>
+  <nav aria-label="手机导航">
+    {navigation.map((item) => (
+      <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+        {item.label}<span aria-hidden="true">↗</span>
+      </a>
+    ))}
+  </nav>
+  <p class="caption-2">研究、代码与生活的长期记录。</p>
+</dialog>
 
 <script>
   const button = document.querySelector<HTMLButtonElement>('#theme-toggle');
@@ -59,5 +79,24 @@ const isCurrent = (href: string) =>
     document.documentElement.dataset.theme = theme;
     localStorage.setItem('theme', theme);
     document.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
+  });
+
+  const menu = document.querySelector<HTMLDialogElement>('#mobile-menu');
+  const menuOpen = document.querySelector<HTMLButtonElement>('#menu-open');
+  const menuClose = document.querySelector<HTMLButtonElement>('#menu-close');
+  menuOpen?.addEventListener('click', () => {
+    menu?.showModal();
+    menuOpen.setAttribute('aria-expanded', 'true');
+  });
+  menuClose?.addEventListener('click', () => menu?.close());
+  menu?.addEventListener('close', () => {
+    menuOpen?.setAttribute('aria-expanded', 'false');
+    menuOpen?.focus({ preventScroll: true });
+  });
+  menu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => menu.close());
+  });
+  window.matchMedia('(min-width: 761px)').addEventListener('change', (event) => {
+    if (event.matches && menu?.open) menu.close();
   });
 </script>
