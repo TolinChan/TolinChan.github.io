@@ -39,6 +39,9 @@ const categories = getPostCategories(post);
               更新于 {formatDate(post.data.updatedAt)}
             </time>
           )}
+          <span id="busuanzi_container_page_pv" style="display: none">
+            阅读 <span id="busuanzi_value_page_pv"></span> 次
+          </span>
         </div>
         {(categories.length > 0 || post.data.tags.length > 0) && (
           <div class="article-terms">
@@ -59,4 +62,9 @@ const categories = getPostCategories(post);
     <Giscus />
   </div>
   <PostEnhancements />
+  <script
+    is:inline
+    async
+    src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
+  ></script>
 </BaseLayout>
