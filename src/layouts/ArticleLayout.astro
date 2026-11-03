@@ -10,6 +10,7 @@ import BaseLayout from './BaseLayout.astro';
 import LegacyComments from '../components/LegacyComments.astro';
 import Giscus from '../components/Giscus.astro';
 import PostEnhancements from '../components/PostEnhancements.astro';
+import legacyViews from '../data/legacy-views.json';
 
 interface Props {
   post: BlogPost;
@@ -17,6 +18,7 @@ interface Props {
 
 const { post } = Astro.props;
 const categories = getPostCategories(post);
+const legacyViewCount = (legacyViews as Record<string, number>)[post.data.legacyId] ?? 0;
 ---
 
 <BaseLayout
@@ -40,7 +42,8 @@ const categories = getPostCategories(post);
             </time>
           )}
           <span id="busuanzi_container_page_pv" style="display: none">
-            阅读 <span id="busuanzi_value_page_pv"></span> 次
+            阅读 <span id="article-view-count" data-legacy-views={legacyViewCount}>{legacyViewCount}</span> 次
+            <span id="busuanzi_value_page_pv" hidden></span>
           </span>
         </div>
         {(categories.length > 0 || post.data.tags.length > 0) && (
@@ -62,6 +65,25 @@ const categories = getPostCategories(post);
     <Giscus />
   </div>
   <PostEnhancements />
+  <script>
+    const currentViews = document.getElementById('busuanzi_value_page_pv');
+    const totalViews = document.getElementById('article-view-count');
+    if (currentViews && totalViews) {
+      const baseline = Number(totalViews.dataset.legacyViews);
+      const updateTotal = () => {
+        const current = currentViews.textContent?.trim() ?? '';
+        if (!/^\d+$/.test(current)) return;
+        const total = baseline + Number(current);
+        if (Number.isSafeInteger(total)) totalViews.textContent = String(total);
+      };
+      new MutationObserver(updateTotal).observe(currentViews, {
+        childList: true,
+        characterData: true,
+        subtree: true,
+      });
+      updateTotal();
+    }
+  </script>
   <script
     is:inline
     async
