@@ -1,12 +1,12 @@
 ---
 title: "安全还不够：让智能合约从规格中生成"
 description: "SmartSpec 从关系式功能规格与时序安全规格出发，借助验证反例综合 Solidity 合约的交易守卫，并在安全之外尽量保留正常行为。"
-publishedAt: "2026-08-04T12:00:00+08:00"
-route: "/2026/08/04/让智能合约从规格中生成/"
+publishedAt: "2026-11-03T00:00:00+08:00"
+route: "/2026/11/03/让智能合约从规格中生成/"
 categories: ["区块链安全"]
 tags: ["Smart Contract", "Program Synthesis", "Formal Methods", "Solidity", "ASE 2026"]
 legacyId: 357
-draft: true
+draft: false
 ---
 
 # 安全还不够：让智能合约从规格中生成
